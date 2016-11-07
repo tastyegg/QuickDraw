@@ -20,8 +20,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements  NfcAdapter.OnNdefPushCompleteCallback,
+                    NfcAdapter.CreateNdefMessageCallback {
 
+    TextView tv;
     NfcAdapter nfcAdpt;
 
     @Override
@@ -31,12 +34,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Example of a call to a native method
+        tv = (TextView) findViewById(R.id.sample_text);
+        //tv.setText(stringFromJNI());
+        tv.setText(R.string.start_text);
+
        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                tv.setText(tv.getText() + " Hello");
             }
         });
 
@@ -53,55 +62,46 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Enable NFC before using the app", Toast.LENGTH_LONG).show();
         }
         // Register callback
-        //nfcAdpt.setNdefPushMessageCallback(this, this);
-
-        // Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
+        nfcAdpt.setNdefPushMessageCallback(this, this);
+        nfcAdpt.setOnNdefPushCompleteCallback(this, this);
     }
 
     public NdefMessage createNdefMessage(NfcEvent event) {
         String text = ("Beam me up, Android!\n\n" + "Beam Time: " + System.currentTimeMillis());
         NdefMessage msg = new NdefMessage(new NdefRecord[] { NdefRecord.createMime("application/vnd.com.example.android.beam", text.getBytes()) });
+
+        tv.setText(tv.getText() + "\nCreated Ndef Message");
+
         return msg;
     }
+
     @Override
-    public void onResume() {
-        super.onResume();
-        // Check to see that the Activity started due to an Android Beam
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-            processIntent(getIntent());
-        }
+    public void onNdefPushComplete(NfcEvent nfcEvent) {
+        tv.setText(tv.getText() + "\nNdef Push Complete");
     }
 
-
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
+    public void onNewIntent(Intent intent) {
+        handleNfcIntent(intent);
+    }
 
-        if (intent != null && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
-            Parcelable[] rawMessages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-            if (rawMessages != null) {
-                NdefMessage[] messages = new NdefMessage[rawMessages.length];
-                for (int i = 0; i < rawMessages.length; i++) {
-                    messages[i] = (NdefMessage) rawMessages[i];
-                }
-            }
+    private void handleNfcIntent(Intent NfcIntent) {
+        if (NfcIntent.getAction().equals(NfcAdapter.ACTION_NDEF_DISCOVERED)) {
+            tv.setText(NfcIntent.getDataString());
         }
-        setIntent(intent);
     }
 
     /**
      * Parses the NDEF Message from the intent and prints to the TextView
      */
     void processIntent(Intent intent) {
-//      textView = (TextView) findViewById(R.id.textView);
         Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
                 NfcAdapter.EXTRA_NDEF_MESSAGES);
         // only one message sent during the beam
         NdefMessage msg = (NdefMessage) rawMsgs[0];
+
         // record 0 contains the MIME type, record 1 is the AAR, if present
-//      textView.setText(new String(msg.getRecords()[0].getPayload()));
+        tv.setText(new String(msg.getRecords()[0].getPayload()));
     }
 
 
