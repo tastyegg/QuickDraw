@@ -11,19 +11,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.toybox.quickdraw.SelectCashActivity"
-    tools:showIn="@layout/activity_select_cash">
+    tools:showIn="@layout/activity_select_cash"
+    android:layout_centerInParent="true"
+    android:layout_centerVertical="false">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_centerInParent="false"
+        android:layout_centerVertical="false">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:ems="10"
-            android:id="@+id/numberCount" />
+            android:id="@+id/numberCount"
+            tools:gravity="center_vertical|center_horizontal"
+            android:gravity="center_vertical|center_horizontal" />
 
         <TextView
             android:text="TextView"

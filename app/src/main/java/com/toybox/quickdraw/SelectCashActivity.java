@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -23,7 +22,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Set;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
 
 import static android.nfc.NdefRecord.createMime;
 
@@ -70,7 +71,12 @@ public class SelectCashActivity extends AppCompatActivity {
             }
         });
         try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            if (operation == 'D')
+                getSupportActionBar().setTitle("Deposit");
+            else if (operation == 'W')
+                getSupportActionBar().setTitle("Withdraw");
+            else
+                getSupportActionBar().setTitle("");
         } catch (NullPointerException npe) {}
 
         /* NFC */
@@ -86,9 +92,7 @@ public class SelectCashActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please activate NFC Android Beam", Toast.LENGTH_LONG).show();
             startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
         }
-        tv.setText("NFC Android Beam feature is enabled");
-
-        tv.setText(tv.getText() + "\nCurrent Operation: " + operation);
+        tv.setText("Please Input An Amount");
 
         //Pending indent
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -133,7 +137,10 @@ public class SelectCashActivity extends AppCompatActivity {
 
                         editable.replace(0, editable.length(), newValue);
                     }
-                } catch (NumberFormatException nfe) {}
+                    SetReadMessage();
+                } catch (NumberFormatException nfe) {
+                    tv.setText("Please Input An Amount");
+                }
             }
         });
         numberText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -148,10 +155,30 @@ public class SelectCashActivity extends AppCompatActivity {
         });
     }
 
+    //Shown to client
+    void SetReadMessage() {
+        try {
+            cashAmount = Float.valueOf(numberText.getText().toString());
+            tv.setText("\n\tOperation: " + operation + "\n\tAmount: " + NumberFormat.getCurrencyInstance().format(cashAmount) + "\nPress Done to Use NFC");
+        } catch (NumberFormatException nfe) {
+            tv.setText("Please Input An Amount");
+        }
+    }
+
+    //Perform Checks during this transmission
     void SetSendMessage() {
-        cashAmount = Float.valueOf(numberText.getText().toString());
-        SetMessage(writeMessage());
-        tv.setText("Message set to " + operation + " " + cashAmount);
+        try {
+            cashAmount = Float.valueOf(numberText.getText().toString());
+        } catch (NumberFormatException nfe) {
+            return;
+        }
+        if (cashAmount > 0) {
+            SetMessage(writeMessage());
+
+            tv.setText("Message set to \n\tOperation: " + operation + "\n\tAmount: " + NumberFormat.getCurrencyInstance().format(cashAmount) + "\nPlease use Android Beam with your closest ATM");
+        } else {
+            tv.setText("Invalid Currency Amount");
+        }
     }
 
     void SetMessage(String text) {

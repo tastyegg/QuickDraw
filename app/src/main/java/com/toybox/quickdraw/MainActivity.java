@@ -1,17 +1,11 @@
 package com.toybox.quickdraw;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Button;
-import android.widget.TextView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,13 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.Set;
-
-import static android.nfc.NdefRecord.createMime;
-
 public class MainActivity extends AppCompatActivity {
     NfcAdapter nfcAdpt;
-    TextView tv;
     Context thisCxt;
 
     // Used to load the 'native-lib' library on application startup.
@@ -41,22 +30,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         thisCxt = this;
 
-        tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tv.setText("");
-            }
-        });
-
         Button withdrawButton = (Button) findViewById(R.id.withdraw);
         withdrawButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv.setText("Withdraw Selected");
                 SetOperationActivity('W');
             }
         });
@@ -64,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         depositButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv.setText("Deposit Selected");
                 SetOperationActivity('D');
             }
         });
@@ -82,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please activate NFC Android Beam", Toast.LENGTH_LONG).show();
             startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
         }
-        tv.setText("NFC Android Beam feature is enabled");
     }
 
     @Override

@@ -5,4 +5,5 @@
     <string name="WithdrawButton">Withdraw</string>
     <string name="DepositButton">Deposit</string>
     <string name="title_activity_select_cash">SelectCashActivity</string>
+    <string name="viewAccountButton">View History</string>
 </resources>
