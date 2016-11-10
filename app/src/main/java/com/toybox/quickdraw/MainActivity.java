@@ -1,14 +1,15 @@
 package com.toybox.quickdraw;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
-import android.nfc.Tag;
-import android.nfc.tech.Ndef;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.widget.Button;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -18,25 +19,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
+import java.util.Set;
 
 import static android.nfc.NdefRecord.createMime;
 
 public class MainActivity extends AppCompatActivity {
     NfcAdapter nfcAdpt;
-    PendingIntent pendingIntent;
-    IntentFilter writeTagFilters[];
     TextView tv;
+    Context thisCxt;
 
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
-    }
-
-    //Write Phone code here
-    String writeMessage() {
-        String message = "Hello World";
-        return message;
     }
 
     @Override
@@ -45,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        thisCxt = this;
 
         tv = (TextView) findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
@@ -57,38 +52,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button withdrawButton = (Button) findViewById(R.id.withdraw);
+        withdrawButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tv.setText("Withdraw Selected");
+                SetOperationActivity('W');
+            }
+        });
+        Button depositButton = (Button) findViewById(R.id.deposit);
+        depositButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tv.setText("Deposit Selected");
+                SetOperationActivity('D');
+            }
+        });
+
         /* NFC */
         nfcAdpt = NfcAdapter.getDefaultAdapter(this);
         // Check if NFC is available on device, abort if not found
         if (nfcAdpt == null) {
-            Toast.makeText(this, "NFC not supported", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Your NFC hardware is not supported", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
         // Check if NFC is enabled
-        if (!nfcAdpt.isEnabled()) {
-            Toast.makeText(this, "Enable NFC before using the app", Toast.LENGTH_LONG).show();
-            finish();
-            return;
+        while (!nfcAdpt.isNdefPushEnabled()) {
+            Toast.makeText(getApplicationContext(), "Please activate NFC Android Beam", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
         }
-
-        //Pending indent
-        pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-        tagDetected.addCategory(Intent.CATEGORY_DEFAULT);
-        writeTagFilters = new IntentFilter[] {tagDetected};
-
-        //Set additional messages
-        SetMessage(writeMessage());
-    }
-
-    void SetMessage(String text) {
-        //append more ndefrecords
-        NdefMessage msg = new NdefMessage(
-                new NdefRecord[] {
-                        createMime("text/plain", text.getBytes())
-                });
-        nfcAdpt.setNdefPushMessage(msg, this);
+        tv.setText("NFC Android Beam feature is enabled");
     }
 
     @Override
@@ -118,4 +112,10 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+
+    void SetOperationActivity(char operation) {
+        Intent intent = new Intent(thisCxt, SelectCashActivity.class);
+        intent.putExtra("com.toybox.quickdraw.OP", operation);
+        startActivity(intent);
+    }
 }

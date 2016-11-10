@@ -8,21 +8,59 @@
     android:fitsSystemWindows="true"
     tools:context="com.toybox.quickdraw.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_height="wrap_content"
+    <ScrollView
         android:layout_width="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    </android.support.design.widget.AppBarLayout>
+            <android.support.design.widget.AppBarLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:theme="@style/AppTheme.AppBarOverlay">
 
-    <include layout="@layout/content_main"/>
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+            </android.support.design.widget.AppBarLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:layout_weight="1" />
+
+            <Button
+                android:text="@string/WithdrawButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/withdraw" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3" />
+
+            <Button
+                android:text="@string/DepositButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/deposit" />
+
+            <include layout="@layout/content_main"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -30,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@android:drawable/ic_delete"
+        app:backgroundTint="@android:color/white" />
 
 </android.support.design.widget.CoordinatorLayout>
