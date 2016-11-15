@@ -53,11 +53,9 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
+
         // Check if NFC is enabled
-        while (!nfcAdpt.isNdefPushEnabled()) {
-            Toast.makeText(getApplicationContext(), "Please activate NFC Android Beam", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
-        }
+        CheckNFCEnabled();
     }
 
     @Override
@@ -92,5 +90,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(thisCxt, SelectCashActivity.class);
         intent.putExtra("com.toybox.quickdraw.OP", operation);
         startActivity(intent);
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        CheckNFCEnabled();
+    }
+
+    void CheckNFCEnabled() {
+        // Check if NFC is enabled
+        if (!nfcAdpt.isEnabled() || !nfcAdpt.isNdefPushEnabled()) {
+            Toast.makeText(getApplicationContext(), "QuickDraw says\n\"Please activate NFC Android Beam\"", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
+        }
     }
 }

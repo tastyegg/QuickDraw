@@ -87,11 +87,9 @@ public class SelectCashActivity extends AppCompatActivity {
             finish();
             return;
         }
-        // Check if NFC is enabled
-        while (!nfcAdpt.isNdefPushEnabled()) {
-            Toast.makeText(getApplicationContext(), "Please activate NFC Android Beam", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
-        }
+
+        CheckNFCEnabled();
+
         tv.setText("Please Input An Amount");
 
         //Pending indent
@@ -188,5 +186,19 @@ public class SelectCashActivity extends AppCompatActivity {
                         createMime("text/plain", text.getBytes())
                 });
         nfcAdpt.setNdefPushMessage(msg, this);
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        CheckNFCEnabled();
+    }
+
+    void CheckNFCEnabled() {
+        // Check if NFC is enabled
+        if (!nfcAdpt.isEnabled() || !nfcAdpt.isNdefPushEnabled()) {
+            Toast.makeText(getApplicationContext(), "QuickDraw says\n\"Please activate NFC Android Beam\"", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
+        }
     }
 }
