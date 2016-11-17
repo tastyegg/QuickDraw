@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/custom"
+    tools:context="com.quickdraw.database.quickdrawdb.LoginActivity">
+
+    <Button
+        android:text="dbCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textColor="@color/white"
+        android:id="@+id/dbCreate"
+        android:layout_marginBottom="18dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:srcCompat="@drawable/qdlogoname"
+        android:id="@+id/logoname"
+        android:layout_above="@+id/nameInput"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="login"
+        android:textColor="@color/custom"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginButton"
+        android:layout_marginBottom="76dp"
+        android:layout_above="@+id/dbCreate"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="170dp"
+        app:srcCompat="@color/white"
+        android:id="@+id/infobox"
+        android:padding="1dp"
+        android:background="@color/colorPrimaryDark"
+        android:translationZ="-1dp"
+        android:layout_marginBottom="56dp"
+        android:layout_above="@+id/dbCreate"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/nameInput"
+        android:hint="Enter your User ID"
+        android:layout_above="@+id/pinInput"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/pinInput"
+        android:hint="Enter your PIN"
+        android:layout_above="@+id/loginButton"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/check"
+        android:id="@+id/check"
+        android:layout_marginTop="9dp"
+        android:layout_alignTop="@+id/nameInput"
+        android:layout_alignEnd="@+id/logo" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/xmark"
+        android:id="@+id/xmark"
+        android:layout_marginTop="9dp"
+        android:layout_alignTop="@+id/nameInput"
+        android:layout_alignEnd="@+id/logo" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/check"
+        android:id="@+id/check2"
+        android:layout_marginTop="8dp"
+        android:layout_alignTop="@+id/pinInput"
+        android:layout_alignStart="@+id/check" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/xmark"
+        android:id="@+id/xmark2"
+        android:layout_marginTop="8dp"
+        android:layout_alignTop="@+id/pinInput"
+        android:layout_alignStart="@+id/check" />
+
+    <ImageView
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/coins"
+        android:id="@+id/backOverlay"
+        android:translationZ="-2dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:adjustViewBounds="false" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:srcCompat="@drawable/qdlogo4"
+        android:id="@+id/logo"
+        android:layout_marginTop="28dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

@@ -1,55 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.toybox.quickdraw.MainActivity">
+    android:background="@color/custom"
+    tools:context="com.quickdraw.database.quickdrawdb.MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+    <EditText
+        android:layout_width="290dp"
+        android:layout_height="40dp"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/amountInput"
+        android:hint="Amount"
+        android:paddingLeft="113dp"
+        android:background="@color/white"
+        android:layout_marginBottom="48dp"
+        android:layout_above="@+id/wButton"
+        android:layout_centerHorizontal="true" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:text="Withdraw"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center_vertical">
+        android:id="@+id/wButton"
+        android:layout_marginBottom="18dp"
+        android:layout_above="@+id/dButton"
+        android:layout_centerHorizontal="true" />
 
-        <Button
-            android:text="@string/WithdrawButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/withdraw" />
+    <Button
+        android:text="Transaction History"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:id="@+id/button2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/dButton" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView3" />
+    <Button
+        android:text="Deposit"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/dButton"
+        android:layout_marginBottom="18dp"
+        android:layout_above="@+id/button2"
+        android:layout_alignStart="@+id/wButton" />
 
-        <Button
-            android:text="@string/DepositButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/deposit" />
+    <TextView
+        android:text="Balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/balancebox"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:layout_below="@+id/namebox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/textView2"
-            android:layout_weight="1" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/namebox"
+        android:text="namebox"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:layout_marginTop="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-        <Button
-            android:text="@string/viewAccountButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/viewAccountButton" />
-
-    </LinearLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

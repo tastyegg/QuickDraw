@@ -1,4 +1,4 @@
-package com.toybox.quickdraw;
+package com.quickdraw.database.quickdrawdb;
 
 import org.junit.Test;
 

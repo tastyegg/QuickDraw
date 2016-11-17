@@ -1,4 +1,4 @@
-package com.toybox.quickdraw;
+package com.quickdraw.database.quickdrawdb;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.toybox.quickdraw", appContext.getPackageName());
+        assertEquals("com.quickdraw.database.quickdrawdb", appContext.getPackageName());
     }
 }

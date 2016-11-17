@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "278452308196",
+    "firebase_url": "https://quickdraw-db.firebaseio.com",
+    "project_id": "quickdraw-db",
+    "storage_bucket": "quickdraw-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278452308196:android:ccafdc6261b2b22c",
+        "android_client_info": {
+          "package_name": "com.quickdraw.database.quickdrawdb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "278452308196-483vjhq791qbok3ljkrl729kpt1a7mq6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1ZVjCVzSbSh0cZFF-FDL9ESqLInqD_MI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
